@@ -19,6 +19,7 @@ blue_grey_height = black_rect_height + grey_frame_width
 brickwidth = 0
 brickheight = 0
 result = True
+PannelMove = False
     
 def draw_rect_grey():
     fill(119, 117, 125)
@@ -157,6 +158,8 @@ def setup():
     size(600, 600)
     global pannelX
     pannelX = width / 2 - pannel_red_width / 2
+    global PrePannelX
+    PrePannelX = pannelX
     frameRate(50)
     global brickwidth
     global brickheight  
@@ -187,6 +190,7 @@ def setup():
                   
 def draw():
     global pannelX
+    global PrePannelX
     global MouseMove
     delta = 5
     global space 
@@ -201,7 +205,8 @@ def draw():
     draw_star()
     pannel(pannelX) 
     global ball
-    ball.update(pannelX,height * 0.9,grey_frame_width + 8,width - grey_frame_width - 8,blue_grey_height + 16,pannel_red_width,pannel_height)
+    global PannelMove
+    ball.update(pannelX,height * 0.9,grey_frame_width + 8,width - grey_frame_width - 8,blue_grey_height + 16,pannel_red_width,pannel_height,PannelMove)
     ball.draw()
     
     draw_show()
@@ -240,13 +245,18 @@ def draw():
                 
     if MouseMove:
         pannelX=mouseX 
-
+        
+    
     if pannelX > width - grey_frame_width - pannel_red_width:
         pannelX = width - grey_frame_width - pannel_red_width
     if pannelX < grey_frame_width:
         pannelX = grey_frame_width
 
-    
+    if PrePannelX <> pannelX:
+        PannelMove = True
+        PrePannelX = pannelX
+    else:
+        PannelMove = False
     
     
     
